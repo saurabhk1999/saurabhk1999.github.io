@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure Cloud Engineer | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azure: #0078D4;
+    --azure-light: #50B0F8;
+    --azure-deep: #003A8C;
+    --sky: #E8F4FD;
+    --carbon: #0A0E17;
+    --slate: #1A2236;
+    --muted: #8A9BB5;
+    --white: #F5F8FF;
+    --accent: #00D4FF;
+    --warn: #FFB400;
+    --grid: rgba(0,120,212,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--carbon);
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── GLOW ORBS ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 { width: 600px; height: 600px; background: var(--azure); top: -200px; right: -200px; animation: drift 18s ease-in-out infinite alternate; }
+  .orb-2 { width: 400px; height: 400px; background: var(--accent); bottom: 10%; left: -100px; animation: drift 22s ease-in-out infinite alternate-reverse; }
+  .orb-3 { width: 300px; height: 300px; background: var(--azure-deep); top: 50%; left: 40%; animation: drift 15s ease-in-out infinite alternate; }
+
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(40px, 30px) scale(1.08); }
+  }
+
+  /* ── WRAPPER ── */
+  .wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 0;
+    background: rgba(10,14,23,0.72);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,120,212,0.15);
+  }
+  nav .wrapper { display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--azure-light); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--azure-light); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 100px;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 60px;
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--azure-light);
+  }
+  .hero-title-sub {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .hero-desc {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 40px;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 14px 28px;
+    background: var(--azure);
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .hero-cta:hover { background: var(--azure-light); transform: translateY(-2px); }
+  .hero-cta svg { width: 16px; height: 16px; }
+
+  /* HERO CARD */
+  .hero-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(0,120,212,0.25);
+    border-radius: 16px;
+    padding: 36px;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--azure), var(--accent), transparent);
+  }
+  .card-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, var(--azure), var(--accent));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .card-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+  .card-role {
+    font-size: 0.75rem;
+    color: var(--azure-light);
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+  .card-stat-row { display: flex; gap: 16px; margin-bottom: 24px; }
+  .card-stat {
+    flex: 1;
+    background: rgba(0,120,212,0.1);
+    border: 1px solid rgba(0,120,212,0.2);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--azure-light);
+    display: block;
+  }
+  .stat-lbl { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    padding: 5px 12px;
+    background: rgba(0,120,212,0.12);
+    border: 1px solid rgba(0,120,212,0.3);
+    border-radius: 100px;
+    font-size: 0.68rem;
+    color: var(--azure-light);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 0; }
+  .section-label {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .section-label::after {
+    content: ''; flex: 1;
+    height: 1px; background: rgba(0,212,255,0.2);
+    max-width: 80px;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    line-height: 1.1;
+    margin-bottom: 48px;
+  }
+  h2 span { color: var(--azure-light); }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .skill-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(0,120,212,0.15);
+    border-radius: 12px;
+    padding: 28px;
+    transition: border-color 0.3s, transform 0.3s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card:hover {
+    border-color: rgba(0,120,212,0.5);
+    transform: translateY(-4px);
+    background: rgba(0,120,212,0.06);
+  }
+  .skill-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--azure), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .skill-card:hover::after { opacity: 1; }
+  .skill-icon {
+    width: 44px; height: 44px;
+    background: rgba(0,120,212,0.15);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    font-size: 1.3rem;
+  }
+  .skill-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .skill-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .skill-tag {
+    padding: 3px 9px;
+    background: rgba(0,120,212,0.1);
+    border-radius: 4px;
+    font-size: 0.62rem;
+    color: var(--azure-light);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 18px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--azure), transparent);
+  }
+  .tl-item {
+    display: flex; gap: 36px;
+    margin-bottom: 48px;
+    padding-left: 0;
+    position: relative;
+  }
+  .tl-dot {
+    width: 38px; height: 38px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--azure);
+    border: 3px solid var(--carbon);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    box-shadow: 0 0 20px rgba(0,120,212,0.4);
+    position: relative; z-index: 1;
+  }
+  .tl-content {
+    flex: 1;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(0,120,212,0.15);
+    border-radius: 12px;
+    padding: 28px;
+    margin-top: -4px;
+  }
+  .tl-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; flex-wrap: wrap; gap: 8px; }
+  .tl-role {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .tl-period {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    background: rgba(0,212,255,0.08);
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid rgba(0,212,255,0.2);
+  }
+  .tl-company { font-size: 0.8rem; color: var(--azure-light); margin-bottom: 16px; }
+  .tl-list { list-style: none; }
+  .tl-list li {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; gap: 10px;
+  }
+  .tl-list li::before { content: '→'; color: var(--azure-light); flex-shrink: 0; }
+
+  /* ── CERTIFICATIONS ── */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .cert-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(0,120,212,0.15);
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .cert-card:hover {
+    border-color: var(--warn);
+    transform: translateY(-4px);
+  }
+  .cert-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--warn), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .cert-card:hover::before { opacity: 1; }
+  .cert-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; }
+  .cert-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .cert-body { font-size: 0.72rem; color: var(--muted); }
+
+  /* ── TERRAFORM ── */
+  .tf-section {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(0,120,212,0.15);
+    border-radius: 16px;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .tf-code {
+    background: #0d1117;
+    border: 1px solid rgba(0,120,212,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .tf-code-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px;
+    background: rgba(0,120,212,0.1);
+    border-bottom: 1px solid rgba(0,120,212,0.2);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .tf-code-header span { color: var(--azure-light); }
+  .tf-dot-row { display: flex; gap: 6px; margin-right: 8px; }
+  .tf-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .d-r { background: #ff5f57; }
+  .d-y { background: #febc2e; }
+  .d-g { background: #28c840; }
+  pre {
+    padding: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    line-height: 1.8;
+    overflow-x: auto;
+    color: #c9d1d9;
+  }
+  .kw { color: #ff7b72; }
+  .str { color: #a5d6ff; }
+  .cmt { color: #8b949e; font-style: italic; }
+  .fn { color: #d2a8ff; }
+  .val { color: #79c0ff; }
+
+  /* ── CONTACT ── */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .contact-text p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 14px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--azure-light); }
+  .contact-link-icon {
+    width: 40px; height: 40px;
+    background: rgba(0,120,212,0.12);
+    border: 1px solid rgba(0,120,212,0.25);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-form-box {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(0,120,212,0.15);
+    border-radius: 14px;
+    padding: 36px;
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,120,212,0.2);
+    border-radius: 6px;
+    padding: 12px 14px;
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--azure); }
+  .form-group textarea { min-height: 100px; }
+  .btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--azure), var(--azure-deep));
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(0,120,212,0.12);
+    padding: 36px 0;
+    text-align: center;
+  }
+  footer p { font-size: 0.75rem; color: var(--muted); }
+  footer span { color: var(--azure-light); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-card { display: none; }
+    .tf-section { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="wrapper">
+    <div class="nav-logo">Azure<span>.</span>Engineer</div>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certs">Certifications</a></li>
+      <li><a href="#terraform">Terraform</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrapper">
+    <div class="hero-inner">
+      <div class="hero-left fade-up">
+        <div class="hero-eyebrow">Azure Cloud Engineer</div>
+        <h1>Building <em>Scalable</em><br>Cloud Infrastructure</h1>
+        <p class="hero-title-sub">4 Years of Azure Expertise</p>
+        <p class="hero-desc">
+          Specializing in Azure IaaS, enterprise networking, security architecture, and Infrastructure as Code. I design, deploy, and optimize cloud environments that are secure, resilient, and cost-efficient.
+        </p>
+        <a href="#contact" class="hero-cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+          Let's Connect
+        </a>
+      </div>
+      <div class="hero-card fade-up" style="transition-delay:0.2s">
+        <div class="card-avatar">AE</div>
+        <div class="card-name">Azure Cloud Engineer</div>
+        <div class="card-role">IaaS · Networking · Terraform · IAM</div>
+        <div class="card-stat-row">
+          <div class="card-stat">
+            <span class="stat-num">4+</span>
+            <span class="stat-lbl">Years Exp.</span>
+          </div>
+          <div class="card-stat">
+            <span class="stat-num">15+</span>
+            <span class="stat-lbl">Services</span>
+          </div>
+          <div class="card-stat">
+            <span class="stat-num">∞</span>
+            <span class="stat-lbl">Uptime Goal</span>
+          </div>
+        </div>
+        <div class="badge-row">
+          <span class="badge">Azure VMs</span>
+          <span class="badge">Terraform</span>
+          <span class="badge">Entra ID</span>
+          <span class="badge">App Gateway</span>
+          <span class="badge">Key Vault</span>
+          <span class="badge">Azure DNS</span>
+          <span class="badge">Backup & DR</span>
+          <span class="badge">Windows Admin</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrapper">
+    <div class="section-label">Expertise</div>
+    <h2>Core <span>Capabilities</span></h2>
+    <div class="skills-grid">
+
+      <div class="skill-card fade-up">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-name">Azure IaaS & Compute</div>
+        <div class="skill-desc">Designing and managing Virtual Machines, availability sets, scale sets, and compute infrastructure optimized for performance and cost.</div>
+        <div class="skill-tags"><span class="skill-tag">Virtual Machines</span><span class="skill-tag">Scale Sets</span><span class="skill-tag">Availability Zones</span></div>
+      </div>
+
+      <div class="skill-card fade-up" style="transition-delay:0.08s">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">Azure Networking</div>
+        <div class="skill-desc">End-to-end network architecture including VNets, subnets, NSGs, peering, load balancers, Application Gateway, and DNS zones.</div>
+        <div class="skill-tags"><span class="skill-tag">VNet</span><span class="skill-tag">Load Balancer</span><span class="skill-tag">App Gateway</span><span class="skill-tag">DNS Zones</span></div>
+      </div>
+
+      <div class="skill-card fade-up" style="transition-delay:0.16s">
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-name">Storage & Data</div>
+        <div class="skill-desc">Architecting durable and scalable storage solutions with Azure Storage Accounts, blob storage, lifecycle management, and access policies.</div>
+        <div class="skill-tags"><span class="skill-tag">Storage Accounts</span><span class="skill-tag">Blob</span><span class="skill-tag">File Shares</span></div>
+      </div>
+
+      <div class="skill-card fade-up" style="transition-delay:0.24s">
+        <div class="skill-icon">🔐</div>
+        <div class="skill-name">Security & Identity</div>
+        <div class="skill-desc">Implementing enterprise-grade security with Azure Entra ID, RBAC, Key Vaults for secrets management, and App Service Certificates.</div>
+        <div class="skill-tags"><span class="skill-tag">Entra ID</span><span class="skill-tag">Key Vault</span><span class="skill-tag">RBAC</span><span class="skill-tag">MFA</span></div>
+      </div>
+
+      <div class="skill-card fade-up" style="transition-delay:0.32s">
+        <div class="skill-icon">🛡️</div>
+        <div class="skill-name">Backup & Disaster Recovery</div>
+        <div class="skill-desc">Designing resilient backup strategies and DR solutions with Azure Backup, Recovery Services Vault, and Azure Site Recovery.</div>
+        <div class="skill-tags"><span class="skill-tag">Azure Backup</span><span class="skill-tag">Site Recovery</span><span class="skill-tag">RTO/RPO</span></div>
+      </div>
+
+      <div class="skill-card fade-up" style="transition-delay:0.4s">
+        <div class="skill-icon">🖥️</div>
+        <div class="skill-name">Windows & Linux Admin</div>
+        <div class="skill-desc">Extensive Windows Server administration and solid Linux (RHEL/Ubuntu) skills including scripting, configuration, and OS-level troubleshooting.</div>
+        <div class="skill-tags"><span class="skill-tag">Windows Server</span><span class="skill-tag">PowerShell</span><span class="skill-tag">Bash</span><span class="skill-tag">Linux</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrapper">
+    <div class="section-label">Career</div>
+    <h2>Work <span>Experience</span></h2>
+    <div class="timeline">
+
+      <div class="tl-item fade-up">
+        <div class="tl-dot">☁</div>
+        <div class="tl-content">
+          <div class="tl-header">
+            <div class="tl-role">Azure Cloud Engineer</div>
+            <div class="tl-period">2022 – Present</div>
+          </div>
+          <div class="tl-company">Current Organization</div>
+          <ul class="tl-list">
+            <li>Designed and deployed multi-region Azure IaaS environments with VM scale sets, load balancers, and Application Gateway for high availability.</li>
+            <li>Managed Azure Entra ID (formerly Azure AD) including user provisioning, RBAC assignments, Conditional Access policies, and MFA rollouts.</li>
+            <li>Automated infrastructure provisioning using Terraform modules, reducing deployment time by 70% and eliminating manual drift.</li>
+            <li>Implemented Azure Backup and Site Recovery plans achieving sub-4-hour RTO for critical workloads.</li>
+            <li>Configured DNS Zones, private endpoints, and SSL certificates via App Service Certificate integration with Key Vault.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item fade-up" style="transition-delay:0.15s">
+        <div class="tl-dot">🖧</div>
+        <div class="tl-content">
+          <div class="tl-header">
+            <div class="tl-role">Cloud & Infrastructure Engineer</div>
+            <div class="tl-period">2021 – 2022</div>
+          </div>
+          <div class="tl-company">Previous Organization</div>
+          <ul class="tl-list">
+            <li>Administered Azure Virtual Networks, NSGs, and VNet peering for secure inter-workload communication across environments.</li>
+            <li>Managed Windows Server 2016/2019 environments including Active Directory, Group Policy, and patch management.</li>
+            <li>Deployed and maintained Azure Storage Accounts with lifecycle policies, immutability, and role-based access.</li>
+            <li>Provided L2/L3 support for hybrid cloud infrastructure spanning on-premises and Azure environments.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="wrapper">
+    <div class="section-label">Credentials</div>
+    <h2>Certifications & <span>Achievements</span></h2>
+    <div class="cert-grid">
+      <div class="cert-card fade-up">
+        <span class="cert-icon">🏆</span>
+        <div class="cert-name">AZ-104: Azure Administrator Associate</div>
+        <div class="cert-body">Microsoft Certified</div>
+      </div>
+      <div class="cert-card fade-up" style="transition-delay:0.1s">
+        <span class="cert-icon">🎯</span>
+        <div class="cert-name">AZ-900: Azure Fundamentals</div>
+        <div class="cert-body">Microsoft Certified</div>
+      </div>
+      <div class="cert-card fade-up" style="transition-delay:0.2s">
+        <span class="cert-icon">🔧</span>
+        <div class="cert-name">HashiCorp Terraform Associate</div>
+        <div class="cert-body">HashiCorp Certified</div>
+      </div>
+      <div class="cert-card fade-up" style="transition-delay:0.3s">
+        <span class="cert-icon">🛡️</span>
+        <div class="cert-name">SC-900: Security Fundamentals</div>
+        <div class="cert-body">Microsoft Certified</div>
+      </div>
+    </div>
+    <p style="font-size:0.76rem;color:var(--muted);margin-top:20px;font-style:italic;">* Update this section with your actual certifications</p>
+  </div>
+</section>
+
+<!-- TERRAFORM -->
+<section id="terraform">
+  <div class="wrapper">
+    <div class="section-label">IaC</div>
+    <h2>Terraform <span>Expertise</span></h2>
+    <div class="tf-section fade-up">
+      <div>
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.8;margin-bottom:20px;">
+          I write production-grade Terraform code for Azure, following best practices like modular design, remote state management with Azure Blob Backend, and CI/CD pipeline integration.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+            <span style="font-size:0.82rem;color:var(--muted);">Modular Terraform architecture with reusable components</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+            <span style="font-size:0.82rem;color:var(--muted);">Remote state with Azure Blob + state locking</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+            <span style="font-size:0.82rem;color:var(--muted);">Terraform workspaces for multi-environment deployments</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+            <span style="font-size:0.82rem;color:var(--muted);">Integration with Azure DevOps CI/CD pipelines</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+            <span style="font-size:0.82rem;color:var(--muted);">Policy as Code with Sentinel for governance enforcement</span>
+          </div>
+        </div>
+      </div>
+      <div class="tf-code">
+        <div class="tf-code-header">
+          <div class="tf-dot-row">
+            <div class="tf-dot d-r"></div>
+            <div class="tf-dot d-y"></div>
+            <div class="tf-dot d-g"></div>
+          </div>
+          <span>main.tf</span> — Azure VM Module
+        </div>
+        <pre><span class="cmt"># Azure Resource Group</span>
+<span class="kw">resource</span> <span class="str">"azurerm_resource_group"</span> <span class="str">"rg"</span> {
+  name     = <span class="val">var.rg_name</span>
+  location = <span class="val">var.location</span>
+
+  tags = <span class="fn">merge</span>(var.tags, {
+    ManagedBy   = <span class="str">"Terraform"</span>
+    Environment = <span class="val">var.env</span>
+  })
+}
+
+<span class="cmt"># Virtual Network</span>
+<span class="kw">resource</span> <span class="str">"azurerm_virtual_network"</span> <span class="str">"vnet"</span> {
+  name                = <span class="str">"vnet-${var.env}-001"</span>
+  resource_group_name = <span class="fn">azurerm_resource_group.rg.name</span>
+  location            = <span class="fn">azurerm_resource_group.rg.location</span>
+  address_space       = [<span class="str">"10.0.0.0/16"</span>]
+}
+
+<span class="cmt"># Key Vault Reference</span>
+<span class="kw">data</span> <span class="str">"azurerm_key_vault_secret"</span> <span class="str">"admin_pwd"</span> {
+  name         = <span class="str">"vm-admin-password"</span>
+  key_vault_id = <span class="val">var.key_vault_id</span>
+}</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrapper">
+    <div class="section-label">Get In Touch</div>
+    <h2>Let's <span>Connect</span></h2>
+    <div class="contact-inner">
+      <div class="contact-text fade-up">
+        <p>
+          Open to new opportunities, collaborations, or just a good conversation about cloud architecture, IaC best practices, or Azure. Don't hesitate to reach out.
+        </p>
+        <div class="contact-links">
+          <a href="https://linkedin.com" class="contact-link" target="_blank">
+            <div class="contact-link-icon">💼</div>
+            linkedin.com/in/your-profile
+          </a>
+          <a href="https://github.com" class="contact-link" target="_blank">
+            <div class="contact-link-icon">💻</div>
+            github.com/your-username
+          </a>
+          <a href="mailto:your@email.com" class="contact-link">
+            <div class="contact-link-icon">✉️</div>
+            your@email.com
+          </a>
+          <a href="#" class="contact-link">
+            <div class="contact-link-icon">📍</div>
+            India (Open to Remote)
+          </a>
+        </div>
+      </div>
+      <div class="contact-form-box fade-up" style="transition-delay:0.15s">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Jane Doe">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="jane@company.com">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="I'd love to discuss an Azure project..."></textarea>
+        </div>
+        <button class="btn-submit">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrapper">
+    <p>Crafted with ☁️ by <span>Azure Cloud Engineer</span> · Built for the cloud, designed with precision</p>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for fade-up animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Trigger hero animations immediately
+  setTimeout(() => {
+    document.querySelectorAll('#hero .fade-up').forEach(el => el.classList.add('visible'));
+  }, 100);
+</script>
+</body>
+</html>
